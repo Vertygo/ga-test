@@ -1,0 +1,40 @@
+name: Github CI - Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+
+      - name: Before deploy
+        run: |
+          echo "@econ:registry=https://www.myget.org/F/venge/npm/" > .npmrc
+          echo "//www.myget.org/F/venge/npm/:_password=${{ secrets.MYGETPASSWORD }}" >> .npmrc
+          echo "//www.myget.org/F/venge/npm/:username=${{ secrets.MYGETUSERNAME }}" >> .npmrc
+          echo "//www.myget.org/F/venge/npm/:email=${{ secrets.MYGETEMAIL }}" >> .npmrc
+          echo "//www.myget.org/F/venge/npm/:always-auth=true" >> .npmrc
+          echo "VERSION_NUMBER=$(npm --no-git-tag-version version patch)" >> $GITHUB_ENV
+          git config --local user.name "Travis CI Deployment"
+          git config --local user.email "teamcity@venge.com"
+          git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
+          git checkout main
+          cat .npmrc
+
+      - name: After deploy
+        run: |
+          git add package-lock.json
+          git commit -am "${{ env.VERSION_NUMBER }} [skip ci]"
+          git tag "${{ env.VERSION_NUMBER }}"
+          git push --set-upstream origin main
+          git push --tags
