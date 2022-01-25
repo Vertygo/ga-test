@@ -30,6 +30,7 @@ jobs:
           git remote set-url origin https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
           git checkout main
           cat .npmrc
+          echo ${{ github.sha }} >> package-lock.json
 
       - name: After deploy
         run: |
