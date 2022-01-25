@@ -2,7 +2,7 @@ name: Use the data
 
 on:
   workflow_run:
-    workflows: [Context testing]
+    workflows: ["ContextTesting"]
     types:
       - completed
 

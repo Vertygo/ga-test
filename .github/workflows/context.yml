@@ -1,4 +1,5 @@
-name: Context testing
+name: ContextTesting
+
 on: push
 
 jobs:
