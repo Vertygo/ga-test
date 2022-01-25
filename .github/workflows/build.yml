@@ -3,6 +3,7 @@ name: Github CI - Pull request
 on:
   push:
     tags-ignore:
+      - '*'
 
 jobs:
   tests:
