@@ -28,12 +28,12 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: eu.gcr.io
-          username: _json_key
-          password: ${{ secrets.DEVECONOCM_GCR_RW }}
+          username: ${{ secrets.DOCKER_LOGIN }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Tag and publish
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: eu.gcr.io/dev-econo-cm/mobile-notification-service:${{ env.IMAGE_TAG }}
+          tags: vertygo/ga-test:${{ env.IMAGE_TAG }}
