@@ -18,3 +18,12 @@ jobs:
         run: echo '${{ toJSON(strategy) }}'
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
+      - name: save file
+        run: echo "Hello world!" > test.txt
+      - name: Archive build artifacts
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-${{ github.event.number }}
+          path: test.txt
+          retention-days: 2
