@@ -13,4 +13,4 @@ jobs:
       - name: Docker
         run: |
           docker build --target=build -t my-service:test .
-          docker build --target=service-final -t my-service:finale-test .
+          docker build --target=final -t my-service:finale-test .
