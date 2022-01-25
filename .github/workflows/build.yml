@@ -2,6 +2,8 @@ name: Github CI - Pull request
 
 on:
   push:
+    branches:
+      - *
     tags-ignore:
       - *
 
@@ -14,6 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Docker
-        run: |
-          docker build --target=build -t my-service:test .
-          docker build --target=final -t my-service:finale-test .
+        run: echo "Hello world!"
+        # run: |
+        #   docker build --target=build -t my-service:test .
+        #   docker build --target=final -t my-service:finale-test .
