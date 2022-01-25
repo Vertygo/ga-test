@@ -1,4 +1,4 @@
-name: Use the data
+name: Download
 
 on:
   workflow_run:
@@ -14,7 +14,7 @@ jobs:
         if: always()
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          name: 'Set status'
+          name: 'Download'
           conclusion: ${{ job.status }}
       - name: 'Download artifact'
         uses: actions/github-script@v5
