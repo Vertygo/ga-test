@@ -1,6 +1,8 @@
 name: Github CI - Pull request
 
-on: [push]
+on:
+  push:
+    tags-ignore:
 
 jobs:
   tests:
