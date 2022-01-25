@@ -16,7 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Docker
-        run: echo "Hello world!"
-        # run: |
-        #   docker build --target=build -t my-service:test .
-        #   docker build --target=final -t my-service:finale-test .
+        run: |
+          docker build --target=build -t my-service:test .
+          docker build --target=final -t my-service:finale-test .
