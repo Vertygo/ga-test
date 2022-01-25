@@ -1,53 +1,53 @@
-name: Download
+# name: Download
 
-on:
-  workflow_run:
-    workflows: ["ContextTesting"]
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     workflows: ["ContextTesting"]
+#     types:
+#       - completed
 
-jobs:
-  download:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: LouisBrunner/checks-action@v1.1.1
-        if: always()
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: 'status'
-          conclusion: 'neutral'
-      - name: 'Download artifact'
-        uses: actions/github-script@v5
-        with:
-          script: |
-            let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               run_id: context.payload.workflow_run.id,
-            });
-            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "build-${{ github.sha }}"
-            })[0];
-            let download = await github.rest.actions.downloadArtifact({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               artifact_id: matchArtifact.id,
-               archive_format: 'zip',
-            });
-            let fs = require('fs');
-            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/build-${{ github.sha }}.zip`, Buffer.from(download.data));
+# jobs:
+#   download:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: LouisBrunner/checks-action@v1.1.1
+#         if: always()
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           name: 'status'
+#           conclusion: 'neutral'
+#       - name: 'Download artifact'
+#         uses: actions/github-script@v5
+#         with:
+#           script: |
+#             let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                run_id: context.payload.workflow_run.id,
+#             });
+#             let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+#               return artifact.name == "build-${{ github.sha }}"
+#             })[0];
+#             let download = await github.rest.actions.downloadArtifact({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                artifact_id: matchArtifact.id,
+#                archive_format: 'zip',
+#             });
+#             let fs = require('fs');
+#             fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/build-${{ github.sha }}.zip`, Buffer.from(download.data));
 
-      - name: 'Unzip artifact'
-        run: unzip build-${{ github.sha }}.zip
-      - uses: LouisBrunner/checks-action@v1.1.1
-        if: failure()
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: 'status'
-          conclusion: 'failure'
-      - uses: LouisBrunner/checks-action@v1.1.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: 'status'
-          conclusion: 'success'
+#       - name: 'Unzip artifact'
+#         run: unzip build-${{ github.sha }}.zip
+#       - uses: LouisBrunner/checks-action@v1.1.1
+#         if: failure()
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           name: 'status'
+#           conclusion: 'failure'
+#       - uses: LouisBrunner/checks-action@v1.1.1
+#         with:
+#           token: ${{ secrets.GITHUB_TOKEN }}
+#           name: 'status'
+#           conclusion: 'success'
 
