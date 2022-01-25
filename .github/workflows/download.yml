@@ -16,8 +16,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: 'Set status'
           conclusion: ${{ job.status }}
-          output: |
-            {"summary":${{ steps.test.outputs.summary }}}
       - name: 'Download artifact'
         uses: actions/github-script@v5
         with:
