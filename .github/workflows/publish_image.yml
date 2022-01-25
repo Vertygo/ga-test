@@ -37,3 +37,4 @@ jobs:
           context: .
           push: true
           tags: eu.gcr.io/dev-econo-cm/mobile-notification-service:${{ env.IMAGE_TAG }}
+          
