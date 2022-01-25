@@ -1,0 +1,20 @@
+name: Use the data
+
+on:
+  workflow_run:
+    workflows: [Context testing]
+    types:
+      - completed
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: build-${{ github.sha }}
+        
+    - name: Display structure of downloaded files
+      run: ls -R
