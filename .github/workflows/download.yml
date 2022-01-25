@@ -1,10 +1,6 @@
 name: Use the data
 
-on:
-  workflow_run:
-    workflows: [Context testing]
-    types:
-      - completed
+on: push
 
 jobs:
   download:
