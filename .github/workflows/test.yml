@@ -1,8 +1,6 @@
 name: test
 
-on:
-  workflow_call:
-  pull_request:
+on: [workflow_call, pull_request]
 
 jobs:
   download:
