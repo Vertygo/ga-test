@@ -5,4 +5,4 @@ on:
 
 jobs:
   call-workflow:
-    uses: Vertygo/ga-test/.github/workflows/test.yml
+    uses: Vertygo/ga-test/.github/workflows/test.yml@1
