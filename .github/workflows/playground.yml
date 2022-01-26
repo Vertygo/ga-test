@@ -6,7 +6,7 @@ on:
 jobs:
   download:
     runs-on: ubuntu-latest
-    uses: Vertygo/ga-test/.github/workflows/test.yml@v1
+    uses: .github/workflows/test.yml@v1
     # steps:
     #   - name: Checkout
     #     uses: actions/checkout@v2
