@@ -4,12 +4,6 @@ on:
   push:
 
 jobs:
-  uses: Vertygo/ga-test/.github/workflows/test.yml
-  download:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  test:
+    uses: Vertygo/ga-test/.github/workflows/test.yml
 
-      - name: Echo
-        run: echo "Test!"
