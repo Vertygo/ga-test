@@ -23,8 +23,6 @@ jobs:
         run: echo "Hello world!" > test.txt
       - name: Slack notification
         if: always()
-        uses: slackapi/slack-github-action@v1.17.0
-        with:
-          payload: "{ \"slack_message\": \"Addons build result: ${{ job.status }} \" }"
+        uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
