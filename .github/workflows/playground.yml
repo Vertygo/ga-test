@@ -4,5 +4,9 @@ on:
   push:
 
 jobs:
-  call-workflow:
+  build:
     uses: ./.github/workflows/test.yml
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
