@@ -5,4 +5,4 @@ on:
 
 jobs:
   call-workflow:
-    uses: ./.github/workflows/test.yml@1
+    uses: ./.github/workflows/test.yml
