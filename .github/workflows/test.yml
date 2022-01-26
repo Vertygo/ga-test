@@ -1,0 +1,10 @@
+name: Playground
+
+on: [pull_request]
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
