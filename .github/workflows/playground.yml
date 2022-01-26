@@ -6,11 +6,10 @@ on:
 jobs:
   download:
     runs-on: ubuntu-latest
+    uses: Vertygo/ga-test/.github/workflows/test.yml@v1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - uses: Vertygo/ga-test/.github/workflows/test.yml@v1
 
       - name: Echo
         run: echo "Test!"
