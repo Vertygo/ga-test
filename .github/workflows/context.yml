@@ -25,6 +25,6 @@ jobs:
         if: always()
         uses: slackapi/slack-github-action@v1.17.0
         with:
-          payload: "{ \"slack_message\": \"Build result: ${{ job.status }}"
+          payload: "{ \"slack_message\": \"Addons build result: ${{ job.status }} \" }"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
