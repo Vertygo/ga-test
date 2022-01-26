@@ -3,7 +3,6 @@ name: Playground
 on:
   push:
     branches:
-      - main
 
 jobs:
   download:
