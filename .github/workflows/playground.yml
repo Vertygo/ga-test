@@ -4,12 +4,12 @@ on:
   push:
 
 jobs:
+  uses: .github/workflows/test.yml@v1
   download:
     runs-on: ubuntu-latest
-    uses: .github/workflows/test.yml@v1
-    # steps:
-    #   - name: Checkout
-    #     uses: actions/checkout@v2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    #   - name: Echo
-    #     run: echo "Test!"
+      - name: Echo
+        run: echo "Test!"
