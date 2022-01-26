@@ -1,4 +1,4 @@
-name: Playground
+name: test
 
 on:
   workflow_call:
