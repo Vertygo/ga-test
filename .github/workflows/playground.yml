@@ -29,7 +29,7 @@ jobs:
       - name: Tag and publish
         uses: docker/build-push-action@v2
         env:
-          GIT_COMMIT: $(git rev-parse --short HEAD)
+          GIT_COMMIT: echo "$(git rev-parse --short HEAD)"
         with:
           context: .
           push: true
