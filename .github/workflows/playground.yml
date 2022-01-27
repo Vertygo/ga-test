@@ -1,15 +1,38 @@
-name: Playground
+name: Github CI - Publish
 
 on:
   push:
-
+    tags:
+      - 'v?[0-9]+.[0-9]+.[0-9]+*' # we have multiple tag formats X.X.X, vX.X.X, vX.X.X-some-info
+ 
 jobs:
-  build:
-    uses: ./.github/workflows/test.yml
+  build_run_tests:
+    name: Build and run tests
+    uses: ./.github/workflows/build.yml
 
-  publish:
-    needs: build
+  publish_docker_image:
+    needs: build_run_tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Generate image tag
+        env:
+          IMAGE_TAG: ${{ github.ref_name }}
+        run: |
+          echo $IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Before deploy
+        run: |
+          echo "${{ secrets.DEVECONOCM_GCR_RW }}" | base64 --decode | docker login -u "${{ secrets.DEVECONOCM_GCR_RW_USERNAME }}" --password-stdin eu.gcr.io
