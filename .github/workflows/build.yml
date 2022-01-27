@@ -1,21 +1,12 @@
-# name: Github CI - Pull request
+name: Github CI - Pull request
 
-# on:
-#   push:
-#     branches:
-#       - '*'
-#     tags-ignore:
-#       - '*'
+on: [pull_request, workflow_call]
 
-# jobs:
-#   tests:
-#     name: Build and run tests
-#     runs-on: ubuntu-latest
-#     timeout-minutes: 15
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
-#       - name: Docker
-#         run: |
-#           docker build --target=build -t my-service:test .
-#           docker build --target=final -t my-service:finale-test .
+jobs:
+  tests:
+    name: Build and run tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2

@@ -1,30 +1,31 @@
-# name: ContextTesting
+name: ContextTesting
 
-# on: push
+on: [pull_request]
 
-# jobs:
-#   dump_contexts_to_log:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Dump GitHub context
-#         id: github_context_step
-#         run: echo '${{ toJSON(github) }}'
-#       - name: Dump job context
-#         run: echo '${{ toJSON(job) }}'
-#       - name: Dump steps context
-#         run: echo '${{ toJSON(steps) }}'
-#       - name: Dump runner context
-#         run: echo '${{ toJSON(runner) }}'
-#       - name: Dump strategy context
-#         run: echo '${{ toJSON(strategy) }}'
-#       - name: Dump matrix context
-#         run: echo '${{ toJSON(matrix) }}'
-#       - name: save file
-#         run: echo "Hello world!" > test.txt
-#       - name: Archive build artifacts
-#         if: github.ref == 'refs/heads/main'
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: build-${{ github.sha }}
-#           path: test.txt
-#           retention-days: 2
+jobs:
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'
+      - name: save file
+        run: echo "Hello world!" > test.txt
+      - name: repo name
+        run: echo "${{ github.repository }}"
+      - name: hash
+        run: echo "$(git rev-parse --short HEAD)"
+      - name: home
+        run: echo "$HOME"
