@@ -27,3 +27,5 @@ jobs:
         run: echo "${{ github.repository }}"
       - name: hash
         run: echo "$(git rev-parse --short HEAD)"
+      - name: home
+        run: echo "$HOME ${{ HOME }}"
