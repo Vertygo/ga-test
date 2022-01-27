@@ -1,9 +1,6 @@
 name: Github CI - Publish
 
-on:
-  push:
-    tags:
-      - 'v?[0-9]+.[0-9]+.[0-9]+*' # we have multiple tag formats X.X.X, vX.X.X, vX.X.X-some-info
+on: [pull_request]
  
 jobs:
   build_run_tests:
