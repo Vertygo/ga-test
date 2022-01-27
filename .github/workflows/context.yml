@@ -23,3 +23,5 @@ jobs:
         run: echo "Hello world!" > test.txt
       - name: repo name
         run: echo "${{ github.repository }}"
+      - name: hash
+        run: echo "$(git rev-parse --short HEAD)"
