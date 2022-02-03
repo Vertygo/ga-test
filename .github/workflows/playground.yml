@@ -1,7 +1,6 @@
 name: Github CI - Publish
 
-on:
-  push:
+on: [push, pull_request]
  
 jobs:
   test_tag:
