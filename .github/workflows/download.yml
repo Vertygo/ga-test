@@ -1,4 +1,4 @@
-# name: Download
+name: Download
 
 # on:
 #   workflow_run:
