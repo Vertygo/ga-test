@@ -1,39 +1,39 @@
-# name: Github CI - Publish
+name: Github CI - Publish
 
-# on:
-#   push:
-#     tags:
-#       - '[0-9]+.[0-9]+.[0-9]+*'
+on:
+  push:
+    tags:
+      - 'v?[0-9]+.[0-9]+.[0-9]+*'
 
-# jobs:
-#   publish_docker_image:
-#     name: Publish docker image
-#     runs-on: ubuntu-latest
-#     timeout-minutes: 15
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
+jobs:
+  publish_docker_image:
+    name: Publish docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-#       - name: Generate image tag
-#         env:
-#           IMAGE_TAG: ${{ github.ref_name }}
-#         run: |
-#           echo $IMAGE_TAG
-#           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+      - name: Generate image tag
+        env:
+          IMAGE_TAG: ${{ github.ref_name }}
+        run: |
+          echo $IMAGE_TAG
+          echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
-#       - name: Set up Docker Buildx
-#         id: buildx
-#         uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
 
-#       - name: Docker login
-#         uses: docker/login-action@v1
-#         with:
-#           username: ${{ secrets.DOCKER_LOGIN }}
-#           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Docker login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_LOGIN }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-#       - name: Tag and publish
-#         uses: docker/build-push-action@v2
-#         with:
-#           context: .
-#           push: true
-#           tags: vertygo/ga-test:${{ env.IMAGE_TAG }}
+      - name: Tag and publish
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: vertygo/ga-test:${{ env.IMAGE_TAG }}
