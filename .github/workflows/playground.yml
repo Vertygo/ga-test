@@ -12,7 +12,7 @@ jobs:
       - name: echo secret
         run: |
           echo "$TEST_SECRET"
-          echo "${ TEST_SECRET/T/A }"
+          echo "${ TEST_SECRET }"
 
       - name: Generate image tag
         env:
