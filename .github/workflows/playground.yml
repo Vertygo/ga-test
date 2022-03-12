@@ -1,38 +1,23 @@
 name: Github CI - Publish
 
-on:
-  push:
-    branches:
-      - main
+on: [push, pull_request]
  
 jobs:
-  publish_docker_image:
+  test_tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github) }}'
+      - name: echo secret
+        run: |
+          echo "${TEST_SECRET}"
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Generate image tag
+        env:
+          IMAGE_TAG: ${{ github.ref_name}}
+        run: |
+          IMAGE_TAG=${IMAGE_TAG/[^a-z0-9]/-}
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+          echo "$IMAGE_TAG"
 
-      - name: Docker login
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_LOGIN }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Set image tag
-        run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-        # run: echo "$(git rev-parse --short HEAD)" >> 
-
-      - name: Tag and publish
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: vertygo/${{ github.event.repository.name }}:${{ github.ref_name }}-${{ env.IMAGE_TAG }}
